@@ -4,74 +4,62 @@ document.addEventListener("DOMContentLoaded",()=>{
  const signup=document.getElementById("signup-button");
  const emailInput=document.getElementById("email");
  const passwordInput=document.getElementById("password");
- const redirectUrl="https://jdnexia.netlify.app/login.html";
 
  if(!jdnexia.ready){
-   msg.textContent="La connexion Supabase n'est pas configurée.";
+   msg.textContent="Service momentanément indisponible. Réessayez plus tard.";
    form.querySelector("button").disabled=true;
    signup.disabled=true;
    return;
  }
 
- function showResend(){
-   let btn=document.getElementById("resend-confirmation");
-   if(!btn){
-     btn=document.createElement("button");
-     btn.type="button";
-     btn.id="resend-confirmation";
-     btn.className="text-button";
-     btn.textContent="Renvoyer l'e-mail de confirmation";
-     msg.insertAdjacentElement("afterend",btn);
-     btn.addEventListener("click",async()=>{
-       const email=emailInput.value.trim();
-       if(!email){msg.textContent="Saisis d'abord ton adresse e-mail.";return}
-       btn.disabled=true;
-       msg.textContent="Envoi du nouveau lien…";
-       const {error}=await jdnexia.client.auth.resend({
-         type:"signup",
-         email,
-         options:{emailRedirectTo:redirectUrl}
-       });
-       msg.textContent=error?"Impossible de renvoyer le lien : "+error.message:"Un nouveau lien vient d'être envoyé. Ouvre le dernier e-mail reçu.";
-       btn.disabled=false;
-     });
-   }
- }
+ const setBusy=(busy,label)=>{
+   form.querySelector("button").disabled=busy;
+   signup.disabled=busy;
+   form.querySelector("button").textContent=label;
+ };
+ const enterSite=()=>{
+   msg.textContent="Accès autorisé. Ouverture de JDNEXIA…";
+   location.replace("index.html");
+ };
 
- form.onsubmit=async e=>{
+ form.addEventListener("submit",async e=>{
    e.preventDefault();
-   msg.textContent="Connexion…";
+   setBusy(true,"Connexion…");
+   msg.textContent="";
    const {data,error}=await jdnexia.client.auth.signInWithPassword({
      email:emailInput.value.trim(),
      password:passwordInput.value
    });
    if(error){
-     msg.textContent=error.message;
-     if(/email not confirmed/i.test(error.message)) showResend();
+     msg.textContent=/email not confirmed/i.test(error.message)
+       ?"Compte non activé. Désactivez la confirmation e-mail dans les paramètres Supabase, puis recréez le compte."
+       :"Identifiants incorrects ou connexion impossible. Vérifiez vos informations.";
+     setBusy(false,"Se connecter");
      return;
    }
-   msg.textContent="Connexion réussie.";
-   if(data.session) location.href="index.html";
- };
+   if(data.session) enterSite();
+ });
 
- signup.onclick=async()=>{
+ signup.addEventListener("click",async()=>{
    const email=emailInput.value.trim();
    const password=passwordInput.value;
-   if(!email||!password){msg.textContent="Saisis ton adresse e-mail et ton mot de passe.";return}
-   msg.textContent="Création du compte…";
-   const {data,error}=await jdnexia.client.auth.signUp({
-     email,
-     password,
-     options:{emailRedirectTo:redirectUrl}
-   });
+   if(!email||!password){msg.textContent="Veuillez remplir l'adresse e-mail et le mot de passe.";return}
+   if(password.length<6){msg.textContent="Le mot de passe doit contenir au moins 6 caractères.";return}
+   setBusy(true,"Création…");
+   msg.textContent="";
+   const {data,error}=await jdnexia.client.auth.signUp({email,password});
    if(error){
-     msg.textContent=error.message;
-     if(/already registered|already exists/i.test(error.message)) showResend();
+     msg.textContent=/already registered|already exists/i.test(error.message)
+       ?"Cette adresse possède déjà un compte. Connectez-vous."
+       :"Impossible de créer le compte. Vérifiez les informations et réessayez.";
+     setBusy(false,"Se connecter");
      return;
    }
-   msg.textContent=data.session
-     ?"Compte créé et connecté."
-     :"Compte créé. Ouvre le dernier e-mail de confirmation envoyé par JDNEXIA.";
-   if(!data.session) showResend();
- };
+   if(data.session){
+     enterSite();
+   }else{
+     msg.textContent="La confirmation e-mail est encore activée. Désactivez-la dans Supabase pour accéder directement au site.";
+     setBusy(false,"Se connecter");
+   }
+ });
 });
