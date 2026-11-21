@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
   document.querySelectorAll("[data-order]").forEach(input=>input.onchange=()=>saveOrder(input.dataset.order,input.value));
  }
  function edit(x){
-  $("edit-id").value=x.id;$("type").value=x.type;$("category").value=x.category||"Cinéma";$("genre").value=x.genre||"";$("title").value=x.title;$("description").value=x.description||"";$("poster_url").value=x.poster_url||"";$("release_year").value=x.release_year||"";$("sort_order").value=x.sort_order||1000;$("published").checked=!!x.published;$("youtube_url").value=x.youtube_url||"";$("type").dispatchEvent(new Event("change"));$("editor-title").textContent="Modifier le contenu";$("save-content").textContent="Enregistrer les modifications";window.scrollTo({top:0,behavior:"smooth"});
+  $("edit-id").value=x.id;$("type").value=x.type;$("category").value=x.category||"Cinéma";$("genre").value=x.genre||"";$("title").value=x.title;$("description").value=x.description||"";$("poster_url").value=x.poster_url||"";$("release_year").value=x.release_year||"";$("sort_order").value=x.sort_order||1000;$("published").checked=!!x.published;$("youtube_url").value=x.youtube_url||"";refreshPreview("youtube_url","youtube-preview");$("type").dispatchEvent(new Event("change"));$("editor-title").textContent="Modifier le contenu";$("save-content").textContent="Enregistrer les modifications";window.scrollTo({top:0,behavior:"smooth"});
  }
  async function saveOrder(id,value){
   const n=Number(value);if(!Number.isInteger(n)||n<1){$("admin-feedback").textContent="La position doit être un nombre entier supérieur à zéro.";return}
