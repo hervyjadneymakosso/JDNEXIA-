@@ -4,8 +4,8 @@
    3) Ne mettez JAMAIS la clé service_role dans ce fichier.
 */
 window.JDNEXIA_CONFIG = {
-  SUPABASE_URL: "https://VOTRE-PROJET.supabase.co",
-  SUPABASE_ANON_KEY: "VOTRE_CLE_ANON_PUBLIQUE"
+  SUPABASE_URL: "https://jeqjzonoyjqmoapcqkrn.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_-WmcdLCd2N5v1U-64DE-Sg_VpExYGzC"
 };
 window.jdnexia = {
   client: null,
