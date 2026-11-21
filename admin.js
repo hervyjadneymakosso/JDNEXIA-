@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded",async()=>{
- if(!jdnexia.ready){alert("Configurez Supabase dans assets/js/config.js.");return}
- const {data:{user}}=await jdnexia.client.auth.getUser();if(!user){location.href="login.html";return}
+ if(!jdnexia.ready){alert("Configurez Supabase dans config.js.");return}
+ const {data:{user}}=await jdnexia.client.auth.getUser();if(!user){location.href="admin-login.html";return}
  const {data:admin}=await jdnexia.client.from("admins").select("user_id").eq("user_id",user.id).maybeSingle();if(!admin){await jdnexia.client.auth.signOut();location.href="login.html";return}
  const $=id=>document.getElementById(id),form=$("content-form");
  $("logout").onclick=async()=>{await jdnexia.client.auth.signOut();location.href="login.html"};
