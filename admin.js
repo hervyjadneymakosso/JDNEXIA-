@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded",async()=>{
  const $=id=>document.getElementById(id),form=$("content-form");
  $("logout").onclick=async()=>{await jdnexia.client.auth.signOut();location.href="login.html"};
  $("type").onchange=()=>{$("series-fields").classList.toggle("hidden",$("type").value!=="series");$("video-fields").classList.toggle("hidden",$("type").value==="series")};
- function reset(){form.reset();$("edit-id").value="";$("first_episode_url").value="";refreshPreview("youtube_url","youtube-preview");refreshPreview("first_episode_url","first-episode-preview");$("editor-title").textContent="Ajouter un contenu";$("save-content").textContent="Enregistrer le contenu";$("sort_order").value=100;$("published").checked=true;$("type").dispatchEvent(new Event("change"))}
+ function reset(){form.reset();$("edit-id").value="";if($("first_episode_url"))$("first_episode_url").value="";refreshPreview("youtube_url","youtube-preview");refreshPreview("first_episode_url","first-episode-preview");$("editor-title").textContent="Ajouter un contenu";$("save-content").textContent="Enregistrer le contenu";$("sort_order").value=100;$("published").checked=true;$("type").dispatchEvent(new Event("change"))}
  $("reset-form").onclick=reset;
 
  function youtubeId(value){
