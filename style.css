@@ -11,3 +11,8 @@
 @media(max-width:600px){.topbar{height:64px;padding:0 5%}.topbar nav{gap:13px;font-size:11px}.brand{font-size:16px}.brand-mark{width:27px;height:27px}.login-link{font-size:11px}.hero{min-height:500px;padding:65px 7%}.hero-art{right:-100px;opacity:.25}.hero h1{font-size:48px}.hero-buttons{flex-wrap:wrap}.content-section{padding:38px 5%}.poster-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.poster-image{height:205px}.section-head h2{font-size:24px}.join-banner{margin:10px 5% 45px;padding:25px;display:block}.join-banner .btn{margin-top:15px}.page-main{padding:35px 5%}.page-heading h1{font-size:35px}.filter-row{flex-direction:column}.filter-row select{width:100%}.details-hero{grid-template-columns:110px 1fr;gap:17px}.details-poster{height:165px}.details-copy h1{font-size:25px}.details-copy p{font-size:12px}.episode-row{gap:10px}.episode-row b{font-size:12px}.stats-grid{gap:8px}.stat-card{padding:14px}.stat-card b{font-size:23px}.admin-main{padding:30px 4%}.admin-panel{padding:16px}.form-grid{grid-template-columns:1fr}footer{padding:22px 5%;gap:12px;flex-wrap:wrap;font-size:10px}.auth-card{padding:27px}.auth-brand{top:22px}.hero-art{display:none}}
 
 .divider-line{height:1px;background:var(--line);margin:28px 0}
+
+
+/* Accès réservé discret en bas de l’accueil */
+.quiet-access{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;color:#b99aff;font-size:8px;opacity:.22;filter:blur(1.1px);transition:opacity .2s,filter .2s;}
+.quiet-access:hover,.quiet-access:focus-visible{opacity:.8;filter:blur(0);outline:none;}
