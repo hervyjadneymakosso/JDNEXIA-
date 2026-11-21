@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090b12"><title>JDNEXIA — Streaming</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="intro" class="intro"><div class="intro-mark">J<span>N</span></div><div class="intro-name">JDNEXIA</div><div class="intro-line"></div><p>LE DIVERTISSEMENT, SANS FRONTIÈRES</p></div>
+  <div id="app-shell" class="app-shell is-hidden">
+    <header class="topbar">
+      <a class="brand" href="index.html"><span class="brand-mark">J</span> JDNEXIA</a>
+      <nav><a class="active" href="index.html">Accueil</a><a href="films.html">Films</a><a href="series.html">Séries</a></nav>
+      <div class="top-actions"><button class="icon-btn" id="search-toggle" aria-label="Rechercher">⌕</button><a class="login-link" href="login.html">Connexion</a></div>
+    </header>
+    <section class="search-panel hidden" id="search-panel"><input id="global-search" placeholder="Rechercher un film ou une série..."><button id="search-go" class="btn btn-primary">Rechercher</button></section>
+    <main>
+      <section class="hero" id="hero">
+        <div class="hero-content"><span class="eyebrow">BIENVENUE SUR JDNEXIA</span><h1>Vos histoires.<br><em>Votre univers.</em></h1><p>Découvrez des films, des séries et des vidéos publiés sur notre plateforme.</p><div class="hero-buttons"><a href="films.html" class="btn btn-primary">Explorer le catalogue</a><a href="series.html" class="btn btn-ghost">Découvrir les séries</a></div></div>
+        <div class="hero-art"><div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div><div class="hero-poster"><span>JDNEXIA</span><b>PLAY<br>YOUR<br>STORY</b><small>UNE NOUVELLE EXPÉRIENCE</small></div></div>
+      </section>
+      <section class="content-section"><div class="section-head"><div><span class="eyebrow">À LA UNE</span><h2>Dernières sorties</h2></div><a href="films.html" class="text-link">Tout voir →</a></div><div id="latest-grid" class="poster-grid"><div class="empty-state">Chargement du catalogue…</div></div></section>
+      <section class="content-section"><div class="section-head"><div><span class="eyebrow">À DÉCOUVRIR</span><h2>Séries populaires</h2></div><a href="series.html" class="text-link">Toutes les séries →</a></div><div id="series-grid" class="poster-grid"></div></section>
+      <section class="join-banner"><div><span class="eyebrow">JDNEXIA</span><h2>Le streaming commence ici.</h2><p>Une plateforme pensée pour mettre vos vidéos en valeur.</p></div><a class="btn btn-primary" href="login.html">Créer un compte</a></section>
+    </main>
+    <footer><a class="brand" href="index.html">JDNEXIA</a><span>© <span id="year"></span> JDNEXIA. Tous droits réservés.</span><a href="admin-login.html">Administration</a></footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script><script src="app.js"></script>
+</body></html>

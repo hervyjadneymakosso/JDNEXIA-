@@ -1,0 +1,12 @@
+document.addEventListener("DOMContentLoaded",async()=>{
+ const root=document.getElementById("watch-root"),p=new URLSearchParams(location.search),id=p.get("id"),episode=p.get("episode");
+ if(!jdnexia.ready){root.innerHTML='<div class="empty-state">Configurez Supabase pour utiliser le lecteur.</div>';return}
+ let item,ep=null,next=null,previous=null;
+ if(episode){let r=await jdnexia.client.from("episodes").select("*,contents:series_id(id,title)").eq("id",episode).eq("published",true).single();ep=r.data;if(ep){item={id:ep.series_id,title:ep.title,description:ep.description||"",youtube_url:ep.youtube_url};let list=await jdnexia.client.from("episodes").select("id,episode_number,season_number").eq("series_id",ep.series_id).eq("published",true).order("season_number").order("episode_number");let arr=list.data||[],i=arr.findIndex(x=>x.id===ep.id);next=arr[i+1];previous=arr[i-1]}}
+ else{let r=await jdnexia.client.from("contents").select("*").eq("id",id).eq("published",true).single();item=r.data}
+ if(!item||!item.youtube_url){root.innerHTML='<div class="empty-state">Vidéo indisponible.</div>';return}
+ const videoId=getYoutubeId(item.youtube_url);if(!videoId){root.innerHTML='<div class="empty-state">Lien YouTube invalide. Utilisez une URL youtube.com ou youtu.be.</div>';return}
+ root.innerHTML=`<div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/${videoId}?rel=0" title="${esc(item.title)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div><h1 class="watch-title">${esc(item.title)}</h1><p class="watch-desc">${esc(item.description||"")} </p><div class="watch-actions">${previous?`<a class="btn btn-ghost" href="watch.html?episode=${previous.id}">← Épisode précédent</a>`:""}${next?`<a class="btn btn-primary" href="watch.html?episode=${next.id}">Épisode suivant →</a>`:""}<a class="btn btn-ghost" href="javascript:history.back()">Retour</a></div>`;
+});
+function getYoutubeId(url){try{let u=new URL(url);if(u.hostname.includes("youtu.be"))return u.pathname.slice(1);if(u.hostname.includes("youtube.com"))return u.searchParams.get("v")||u.pathname.split("/").filter(Boolean).pop();}catch(e){}return null}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
